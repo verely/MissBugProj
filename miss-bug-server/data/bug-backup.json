@@ -1,0 +1,72 @@
+[
+    {
+        "_id": "bug001",
+        "title": "Unable to delete user account",
+        "desc": "Users are unable to delete its account, resulting in a poor user experience",
+        "severity": 3,
+        "createdAt": 1645090800000
+    },
+    {
+        "_id": "bug002",
+        "title": "Search results not displaying correctly",
+        "desc": "Search results are not being displayed properly, causing difficulty in finding relevant information.",
+        "severity": 2,
+        "createdAt": 1645090800000
+    },
+    {
+        "_id": "bug003",
+        "title": "Error message not shown when submitting invalid form",
+        "desc": "When users submit an invalid form, no error message is displayed, leading to confusion.",
+        "severity": 4,
+        "createdAt": 1645090800000
+    },
+    {
+        "_id": "bug004",
+        "title": "Crash when uploading large files",
+        "desc": "The page crashes unexpectedly when attempting to load a large dataset, affecting user experience.",
+        "severity": 5,
+        "createdAt": 1645090800000
+    },
+    {
+        "_id": "bug005",
+        "title": "Broken filtering options on the search results page",
+        "desc": "The filtering options available on the search results page are not functioning correctly, preventing users from effectively narrowing down their search.",
+        "severity": 2,
+        "createdAt": 1645090800000
+    },
+    {
+        "_id": "bug006",
+        "title": "Broken image links",
+        "desc": "Several product pages are missing images, resulting in a poor user experience.",
+        "severity": 3,
+        "createdAt": 1645090800000
+    },
+    {
+        "_id": "bug007",
+        "title": "Broken search functionality on the website",
+        "desc": "The search feature on the website is not working correctly, negatively impacting user experience",
+        "severity": 3,
+        "createdAt": 1645090800000
+    },
+    {
+        "_id": "bug008",
+        "title": "Navigation menu disappears after clicking on a link",
+        "desc": "After clicking on a link in the navigation menu, the menu disappears, making it difficult to navigate to other pages.",
+        "severity": 4,
+        "createdAt": 1645090800000
+    },
+    {
+        "_id": "bug009",
+        "title": "Text overlapping issue on user profile page",
+        "desc": "Text overlaps with other elements on the user profile page, making it difficult to read.",
+        "severity": 2,
+        "createdAt": 1645090800000
+    },
+    {
+        "_id": "bug010",
+        "title": "Unable to submit order form",
+        "desc": "Users are unable to submit the order form, preventing them from completing their purchase.",
+        "severity": 5,
+        "createdAt": 1645090800000
+    }
+  ]
