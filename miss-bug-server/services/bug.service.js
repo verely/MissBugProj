@@ -63,8 +63,10 @@ async function save(bugToSave){
         if (bugToSave._id) {
             const index = bugs.findIndex(bug => bug._id === bugToSave._id)
             if (index<0) throw `Cannot find the bug with id ${bugToSave._id}`
+            bugs[index]=bugToSave
         } else {
             bugToSave._id = utilService.makeId()
+            bugToSave.createdAt = Date.now()
             bugs.push(bugToSave)
         }
         await _saveBugsToFile()

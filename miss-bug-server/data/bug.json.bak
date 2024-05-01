@@ -1,48 +1,91 @@
 [
     {
-        "_id": "abc120",
-        "title": "Cannot save a Car",
-        "severity": 2,
-        "createdAt": 1542107359454
+        "_id": "bug001",
+        "title": "Unable to delete user account",
+        "desc": "Users are unable to delete its account, resulting in a poor user experience",
+        "severity": 3,
+        "createdAt": 1645090800000
     },
     {
-        "_id": "pqr678",
-        "title": "Unable to delete user account",
+        "_id": "bug002",
+        "title": "Search results not displaying correctly",
+        "desc": "Search results are not being displayed properly, causing difficulty in finding relevant information.",
+        "severity": 9,
+        "createdAt": 1645090800000
+    },
+    {
+        "_id": "bug003",
+        "title": "Error message not shown when submitting invalid form",
+        "desc": "When users submit an invalid form, no error message is displayed, leading to confusion.",
         "severity": 4,
         "createdAt": 1645090800000
     },
     {
-        "_id": "def456",
-        "title": "Login button not working",
-        "severity": 4,
-        "createdAt": 1649324400000
-    },
-    {
-        "_id": "jkl012",
+        "_id": "bug004",
         "title": "Crash when uploading large files",
+        "desc": "The page crashes unexpectedly when attempting to load a large dataset, affecting user experience.",
         "severity": 5,
-        "createdAt": 1647510000000
+        "createdAt": 1645090800000
     },
     {
-        "_id": "ghi789",
-        "title": "Incorrect date format on website",
+        "_id": "bug005",
+        "title": "Broken filtering options on the search results page",
+        "desc": "The filtering options available on the search results page are not functioning correctly, preventing users from effectively narrowing down their search.",
+        "severity": 2,
+        "createdAt": 1645090800000
+    },
+    {
+        "_id": "bug006",
+        "title": "Broken image links",
+        "desc": "Several product pages are missing images, resulting in a poor user experience.",
         "severity": 3,
-        "createdAt": 1648719600000
+        "createdAt": 1645090800000
     },
     {
-        "_id": "mno345",
-        "title": "Dropdown menu not displaying correctly",
+        "_id": "bug007",
+        "title": "Broken search functionality on the website",
+        "desc": "The search feature on the website is not working correctly, negatively impacting user experience",
         "severity": 3,
-        "createdAt": 1646300400000
+        "createdAt": 1645090800000
     },
     {
-        "_id": "tuUcwg",
-        "createdAt": 1714480758705
+        "_id": "bug008",
+        "title": "Navigation menu disappears after clicking on a link",
+        "desc": "After clicking on a link in the navigation menu, the menu disappears, making it difficult to navigate to other pages.",
+        "severity": 4,
+        "createdAt": 1645090800000
     },
     {
-        "_id": "kt2mpo",
-        "title": "Cannot remove a Car",
-        "severity": "2",
-        "createdAt": 1714481525906
+        "_id": "bug009",
+        "title": "Text overlapping issue on user profile page",
+        "desc": "Text overlaps with other elements on the user profile page, making it difficult to read.",
+        "severity": 2,
+        "createdAt": 1645090800000
+    },
+    {
+        "_id": "bug010",
+        "title": "Unable to submit order form",
+        "desc": "Users are unable to submit the order form, preventing them from completing their purchase.",
+        "severity": 5,
+        "createdAt": 1645090800000
+    },
+    {
+        "_id": "8wegcA",
+        "title": "qq",
+        "severity": 2,
+        "createdAt": 1714565490520
+    },
+    {
+        "title": "Error on PDF download",
+        "desc": "Download PDF is not working, resulting an error.",
+        "severity": 4,
+        "_id": "SFlYEV"
+    },
+    {
+        "title": "Error on PDF download",
+        "desc": "Download PDF is not working, resulting an error.",
+        "severity": 3,
+        "_id": "M5c81g",
+        "createdAt": 1714597745193
     }
 ]

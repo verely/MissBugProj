@@ -21,6 +21,7 @@ const corsOptions = {
 app.use(express.static('public'))
 app.use(cookieParser())
 app.use(cors(corsOptions))
+app.use(express.json())
 
 
 app.get('/api/bug', async (req, res) => {
@@ -34,14 +35,22 @@ app.get('/api/bug', async (req, res) => {
     }
 })
 
-app.get('/api/bug/save', async (req, res) => {
+app.post('/api/bug/', async (req, res) => {
+    const {title, desc, severity} = req.body
+    let bugToSave = {title, desc, severity: +severity}
     try {
-        let bugToSave = {
-            "_id" : req.query._id,
-            "title" : req.query.title,
-            "severity" : +req.query.severity,
-            "createdAt" : Date.now()
-        }
+        bugToSave = await bugService.save(bugToSave)
+        res.send(bugToSave)
+    } catch (error) {
+        loggerService.error(`Cannot save a bug`, error)
+        res.status(400).send(`Cannot save a bug`)
+    }
+})
+
+app.put('/api/bug/:bugId', async (req, res) => {
+    const {_id, title, desc, severity, createdAt} = req.body
+    let bugToSave = {_id, title, desc, severity: +severity, createdAt}
+    try {
         bugToSave = await bugService.save(bugToSave)
         res.send(bugToSave)
     } catch (error) {
@@ -63,7 +72,7 @@ app.get('/api/bug/:bugId', async (req, res) => {
     }
 })
 
-app.get('/api/bug/:bugId/remove', async (req, res) => {
+app.delete('/api/bug/:bugId/', async (req, res) => {
     const bugId = req.params.bugId
     try {
         await bugService.remove(bugId)
