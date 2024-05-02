@@ -9,7 +9,7 @@ import { storageService } from './storage.service.js'
 
 // const BASE_URL = 'http://localhost:3030/api/bug/'
 // const BASE_URL = '//localhost:3030/api/bug/'
-const BASE_URL = '//localhost:3000/api/bug/'
+const BASE_URL = '/api/bug/'
 // const BASE_URL =  process.env.NODE_ENV !== 'development'
 //         ? '/api/'
 //         : '//localhost:3000/api/'
