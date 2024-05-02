@@ -7,7 +7,8 @@ var axios = Axios.create({
 import { utilService } from './util.service.js'
 import { storageService } from './storage.service.js'
 
-const BASE_URL = 'http://localhost:3030/api/bug/'
+// const BASE_URL = 'http://localhost:3030/api/bug/'
+const BASE_URL = '//localhost:3030/api/bug/'
 const BUG_KEY = 'bugDB'
 
 _createBugs()
