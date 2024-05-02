@@ -1,6 +1,5 @@
 import fs from 'fs'
-import { utilService } from "./util.service.js"
-
+import { utilService } from '../../services/util.service.js'
 
 // console.log('readJsonFile')
 const bugs = utilService.readJsonFile('data/bug.json')

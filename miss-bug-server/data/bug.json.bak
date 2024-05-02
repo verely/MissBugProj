@@ -68,24 +68,5 @@
         "desc": "Users are unable to submit the order form, preventing them from completing their purchase.",
         "severity": 5,
         "createdAt": 1645090800000
-    },
-    {
-        "_id": "8wegcA",
-        "title": "qq",
-        "severity": 2,
-        "createdAt": 1714565490520
-    },
-    {
-        "title": "Error on PDF download",
-        "desc": "Download PDF is not working, resulting an error.",
-        "severity": 4,
-        "_id": "SFlYEV"
-    },
-    {
-        "title": "Error on PDF download",
-        "desc": "Download PDF is not working, resulting an error.",
-        "severity": 3,
-        "_id": "M5c81g",
-        "createdAt": 1714597745193
     }
 ]
