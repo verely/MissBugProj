@@ -7,12 +7,9 @@ var axios = Axios.create({
 import { utilService } from './util.service.js'
 import { storageService } from './storage.service.js'
 
-// const BASE_URL = 'http://localhost:3030/api/bug/'
-// const BASE_URL = '//localhost:3030/api/bug/'
-const BASE_URL = '/api/bug/'
-// const BASE_URL =  process.env.NODE_ENV !== 'development'
-//         ? '/api/'
-//         : '//localhost:3000/api/'
+const BASE_URL = process.env.VITE_DEV_ENV === 'true'
+  ? '//localhost:3000/api/bug/'
+  : '/api/bug/';
 
 const BUG_KEY = 'bugDB'
 
