@@ -33,8 +33,8 @@ async function query(filterBy = {}) {
         bugs = bugs.filter(bug => regExp.test(bug.title))
     }
 
-    if (filterBy.severity) {
-        bugs = bugs.filter(bug => bug.severity = filterBy.severity)
+    if (filterBy.minSeverity) {
+        bugs = bugs.filter(bug => bug.severity >= filterBy.minSeverity)
     }
     return bugs
 }
@@ -62,7 +62,7 @@ function getEmptyBug(title = '', desc='', severity = '') {
 }
 
 function getDefaultFilter() {
-    return { title: '', severity: '' }
+    return { title: '', minSeverity: '' }
 }
 
 function _createBugs() {

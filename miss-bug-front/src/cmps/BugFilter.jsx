@@ -35,15 +35,16 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
     function onSubmitFilter(ev) {
         ev.preventDefault()
         onSetFilterBy(filterByToEdit)
+        // console.log(`onSubmitFilter: ${filterByToEdit.title}, ${filterByToEdit.minSeverity}`)
     }
 
-    const { txt, minSeverity } = filterByToEdit
+    const { title, minSeverity } = filterByToEdit
     return (
         <section className="bug-filter">
             <h2>Bug Filter</h2>
             <form onSubmit={onSubmitFilter}>
-                <label htmlFor="txt">Title: </label>
-                <input value={txt} onChange={handleChange} type="text" placeholder="By Title" id="txt" name="txt" />
+                <label htmlFor="title">Title: </label>
+                <input value={title} onChange={handleChange} type="text" placeholder="By Title" id="title" name="title" />
 
                 <label htmlFor="minSeverity">Min Severity: </label>
                 <input value={minSeverity} onChange={handleChange} type="number" placeholder="By Min Severity" id="minSeverity" name="minSeverity" />

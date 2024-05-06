@@ -25,7 +25,7 @@ export function BugIndex() {
   }
 
   async function loadBugs() {
-    const bugs = await bugService.query()
+    const bugs = await bugService.query(filterBy)
     setBugs(bugs)
   }
 
