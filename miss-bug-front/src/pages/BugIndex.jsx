@@ -10,6 +10,7 @@ import { BugList } from '../cmps/BugList.jsx'
 
 export function BugIndex() {
   const [bugs, setBugs] = useState([])
+  // const [currentPage, setCurrentPage] = useState(1);
   const [filterBy, setFilterBy] = useState(bugService.getDefaultFilter())
 
   const debouncedSetFilterBy =
@@ -32,7 +33,7 @@ export function BugIndex() {
   async function onRemoveBug(bugId) {
     try {
       await bugService.remove(bugId)
-      console.log('Deleted Succesfully!')
+      console.log('Deleted Successfully!')
       setBugs(prevBugs => prevBugs.filter((bug) => bug._id !== bugId))
       showSuccessMsg('Bug removed')
     } catch (err) {

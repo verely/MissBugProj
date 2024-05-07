@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 export function BugFilter({ filterBy, onSetFilterBy }) {
 
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
-
+    const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
         console.log(filterByToEdit)
@@ -32,10 +32,16 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
         setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
     }
 
+    function handlePageChange(step) {
+        const newPage = currentPage + step
+        setCurrentPage(newPage);
+        setFilterByToEdit(prevFilter => ({...prevFilter, pageIndex: newPage}));
+    }
+
     function onSubmitFilter(ev) {
         ev.preventDefault()
         onSetFilterBy(filterByToEdit)
-        // console.log(`onSubmitFilter: ${filterByToEdit.title}, ${filterByToEdit.minSeverity}`)
+        console.log(`onSubmitFilter: ${filterByToEdit.pageIndex}, ${filterByToEdit.title}, ${filterByToEdit.minSeverity}`)
     }
 
     const { title, minSeverity } = filterByToEdit
@@ -49,8 +55,13 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
                 <label htmlFor="minSeverity">Min Severity: </label>
                 <input value={minSeverity} onChange={handleChange} type="number" placeholder="By Min Severity" id="minSeverity" name="minSeverity" />
 
-                <button>Set Filter</button>
+                {/* <button>Set Filter</button> */}
             </form>
+            <div>
+                <button onClick={() => handlePageChange(-1)} disabled={currentPage === 1}>Previous</button>
+                <span>Page {currentPage}</span>
+                <button onClick={() => handlePageChange(1)}>Next</button>
+            </div>
         </section>
     )
 }

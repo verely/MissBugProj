@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { utilService } from '../../services/util.service.js'
 
-// console.log('readJsonFile')
+const PAGE_SIZE_DEFAULT = 2
 const bugs = utilService.readJsonFile('data/bug.json')
 // console.log(bugs)
 
@@ -12,23 +12,42 @@ export const bugService = {
     save
 }
 
-async function query() {
-    //return Promise.resolve(bugs)
+async function query(filterBy = {}) {
+    // console.log(`back query filterBy: index=${filterBy.pageIndex}
+    // title=${filterBy.title} severity=${filterBy.minSeverity}`)
+
+    let filteredBugs = [...bugs]
+
     try {
-        return bugs
+        if (filterBy.title) {
+            const regExp = new RegExp(filterBy.title, 'i')
+            filteredBugs = filteredBugs.filter(bug => regExp.test(bug.title))
+        }
+
+        if (filterBy.minSeverity) {
+            filteredBugs = filteredBugs.filter(bug => bug.severity >= filterBy.minSeverity)
+        }
+
+        filteredBugs.sort((a, b) => {
+            if (a.title !== b.title) {
+                return a.title.localeCompare(b.title);
+            } else {
+                return a.severity - b.severity;
+            }
+        });
+
+        const pageIndex = filterBy.pageIndex || 1;
+        const pageSize = filterBy.pageSize || PAGE_SIZE_DEFAULT;
+        const startIdx = (pageIndex - 1) * pageSize;
+        const endIdx = startIdx + pageSize;
+        const paginatedBugs = filteredBugs.slice(startIdx, endIdx);
+
+        // console.log(paginatedBugs)
+        return paginatedBugs
     } catch (error) {
         throw error
     }
 }
-
-// async function getById(bugId) {
-//     try {
-//         const bug = bugs.find(bug=> bug._id === bugId)
-//         return bug
-//     } catch (error) {
-//         throw error
-//     }
-// }
 
 async function getById(bugId) {
     return new Promise((resolve, reject) => {

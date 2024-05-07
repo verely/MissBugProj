@@ -26,16 +26,8 @@ export const bugService = {
 }
 
 async function query(filterBy = {}) {
-    let { data: bugs } = await axios.get(BASE_URL)
-
-    if (filterBy.title) {
-        const regExp = new RegExp(filterBy.title, 'i')
-        bugs = bugs.filter(bug => regExp.test(bug.title))
-    }
-
-    if (filterBy.minSeverity) {
-        bugs = bugs.filter(bug => bug.severity >= filterBy.minSeverity)
-    }
+    // console.log(`filterBy: index=${filterBy.pageIndex} title=${filterBy.title} severity=${filterBy.minSeverity}`)
+    let { data: bugs } = await axios.get(BASE_URL, { params: filterBy })
     return bugs
 }
 
@@ -62,7 +54,7 @@ function getEmptyBug(title = '', desc='', severity = '') {
 }
 
 function getDefaultFilter() {
-    return { title: '', minSeverity: '' }
+    return { title: '', minSeverity: '', pageIndex: 0 }
 }
 
 function _createBugs() {
