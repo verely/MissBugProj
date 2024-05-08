@@ -1,5 +1,6 @@
 import fs from 'fs'
 import { utilService } from '../../services/util.service.js'
+import { loggerService } from '../../services/logger.service.js'
 
 const PAGE_SIZE_DEFAULT = 2
 const bugs = utilService.readJsonFile('data/bug.json')
@@ -44,8 +45,9 @@ async function query(filterBy = {}) {
 
         // console.log(paginatedBugs)
         return paginatedBugs
-    } catch (error) {
-        throw error
+    } catch (err) {
+        loggerService.error(`Error occurred while query: ${err}. Filter parameters used: ${filterBy.title} ${filterBy.minSeverity}`);
+        throw err
     }
 }
 
@@ -72,6 +74,7 @@ async function remove(bugId) {
         bugs.splice(bugIndex, 1)
         _saveBugsToFile()
     } catch (error) {
+        loggerService.error(`Error occurred while bug ${bugId} removal: ${err}.`);
         throw error
     }
 }
@@ -90,6 +93,7 @@ async function save(bugToSave){
         await _saveBugsToFile()
         return bugToSave
     } catch (error) {
+        loggerService.error(`Error occurred while bug saving ${bugToSave.title}: ${err}.`);
         throw error
     }
 }
