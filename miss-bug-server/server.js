@@ -2,7 +2,7 @@ import express from 'express'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
-import { loggerService } from './services/logger.service.js'
+import { logger } from './services/logger.service.js'
 
 const app = express()
 
@@ -31,5 +31,5 @@ app.use('/api/bug', bugRoutes)
 const port = process.env.PORT || 3000
 app.get('/', (req, res) => res.send('Hello there'))
 app.listen(port, () =>
-    loggerService.info(`Server listening on port ${port}`)
+    logger.info(`Server listening on port ${port}`)
 )

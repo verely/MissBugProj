@@ -1,109 +1,102 @@
-import fs from 'fs'
+import mongodb from 'mongodb'
+const { ObjectId } = mongodb
+
+import { dbService } from '../../services/db.service.js'
+import { logger } from '../../services/logger.service.js'
 import { utilService } from '../../services/util.service.js'
-import { loggerService } from '../../services/logger.service.js'
 
-const PAGE_SIZE_DEFAULT = 2
-const bugs = utilService.readJsonFile('data/bug.json')
-// console.log(bugs)
-
-export const bugService = {
-    query,
-    getById,
-    remove,
-    save
-}
-
-async function query(filterBy = {}) {
-    // console.log(`back query filterBy: index=${filterBy.pageIndex}
-    // title=${filterBy.title} severity=${filterBy.minSeverity}`)
-
-    let filteredBugs = [...bugs]
-
+async function query(filterBy={}) {
     try {
-        if (filterBy.title) {
-            const regExp = new RegExp(filterBy.title, 'i')
-            filteredBugs = filteredBugs.filter(bug => regExp.test(bug.title))
+        const criteria = {
+            title: { $regex: filterBy.title, $options: 'i' }
         }
-
-        if (filterBy.minSeverity) {
-            filteredBugs = filteredBugs.filter(bug => bug.severity >= filterBy.minSeverity)
-        }
-
-        filteredBugs.sort((a, b) => {
-            if (a.title !== b.title) {
-                return a.title.localeCompare(b.title);
-            } else {
-                return a.severity - b.severity;
-            }
-        });
-
-        const pageIndex = filterBy.pageIndex || 1;
-        const pageSize = filterBy.pageSize || PAGE_SIZE_DEFAULT;
-        const startIdx = (pageIndex - 1) * pageSize;
-        const endIdx = startIdx + pageSize;
-        const paginatedBugs = filteredBugs.slice(startIdx, endIdx);
-
-        // console.log(paginatedBugs)
-        return paginatedBugs
+        const collection = await dbService.getCollection('bug')
+        var bugs = await collection.find(criteria).toArray()
+        return bugs
     } catch (err) {
-        loggerService.error(`Error occurred while query: ${err}. Filter parameters used: ${filterBy.title} ${filterBy.minSeverity}`);
+        logger.error(`Error occurred while search query: ${err}. Filter parameters used: ${filterBy.title}`);
         throw err
     }
 }
 
 async function getById(bugId) {
-    return new Promise((resolve, reject) => {
-        try {
-            console.log(bugs)
-            console.log(`trying to get bugId: ${bugId}`)
-            const bug = bugs.find(bug => bug._id === bugId);
-            if (bug) {
-                resolve(bug);
-            } else {
-                reject(new Error(`Bug with id ${bugId} not found`));
-            }
-        } catch (error) {
-            reject(error);
-        }
-    });
+    try {
+        const collection = await dbService.getCollection('bug')
+        const bug = await collection.findOne({ _id: new ObjectId(bugId) })
+        bug.createdAt = ObjectId(bug._id).getTimestamp()
+        return bug
+    } catch (err) {
+        logger.error(`Cannot find bug ${bugId}`, err)
+        throw err
+    }
 }
 
 async function remove(bugId) {
     try {
-        const bugIndex = bugs.findIndex(bug => bug._id === bugId)
-        bugs.splice(bugIndex, 1)
-        _saveBugsToFile()
-    } catch (error) {
-        loggerService.error(`Error occurred while bug ${bugId} removal: ${err}.`);
-        throw error
+        const collection = await dbService.getCollection('bug')
+        await collection.deleteOne({ _id: new ObjectId(bugId) })
+    } catch (err) {
+        logger.error(`Cannot remove bug ${bugId}`, err)
+        throw err
     }
 }
 
-async function save(bugToSave){
+async function add(bug) {
     try {
-        if (bugToSave._id) {
-            const index = bugs.findIndex(bug => bug._id === bugToSave._id)
-            if (index<0) throw `Cannot find the bug with id ${bugToSave._id}`
-            bugs[index]=bugToSave
-        } else {
-            bugToSave._id = utilService.makeId()
-            bugToSave.createdAt = Date.now()
-            bugs.push(bugToSave)
-        }
-        await _saveBugsToFile()
-        return bugToSave
-    } catch (error) {
-        loggerService.error(`Error occurred while bug saving ${bugToSave.title}: ${err}.`);
-        throw error
+        const collection = await dbService.getCollection('bug')
+        await collection.insertOne(bug)
+        return bug
+    } catch (err) {
+        logger.error('Cannot insert bug', err)
+        throw err
     }
 }
 
-function _saveBugsToFile(path = './data/bug.json') {
-    return new Promise ( (resolve, reject) => {
-        const data = JSON.stringify(bugs, null, 4)
-        fs.writeFile(path, data, (err) => {
-            if (err) return reject(err)
-            resolve()
-        })
-    })
+async function update(bug) {
+    try {
+        const bugToSave = {
+            title: bug.title,
+            desc: bug.desc,
+            severity: bug.severity
+        }
+        const collection = await dbService.getCollection('bug')
+        await collection.updateOne({ _id: new ObjectId(bug._id) }, { $set: bugToSave })
+        return bug
+    } catch (err) {
+        logger.error(`Cannot update bug ${bug._id}`, err)
+        throw err
+    }
+}
+
+async function addBugLabels(bugId, label) {
+    try {
+        label.id = utilService.makeId()
+        const collection = await dbService.getCollection('bug')
+        await collection.updateOne({ _id: new ObjectId(bugId) }, { $push: { labels: label } })
+        return label
+    } catch (err) {
+        logger.error(`Cannot add bug label ${bugId}`, err)
+        throw err
+    }
+}
+
+async function removeBugLabels(bugId, labelId) {
+    try {
+        const collection = await dbService.getCollection('bug')
+        await collection.updateOne({ _id: new ObjectId(bugId) }, { $pull: { labels: {id: labelId} } })
+        return labelId
+    } catch (err) {
+        logger.error(`cannot remove bug label ${bugId}`, err)
+        throw err
+    }
+}
+
+export const bugService = {
+    query,
+    getById,
+    remove,
+    add,
+    update,
+    addBugLabels,
+    removeBugLabels
 }
