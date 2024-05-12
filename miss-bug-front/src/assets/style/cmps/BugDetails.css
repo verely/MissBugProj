@@ -1,3 +1,14 @@
+.bug-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    margin-top: 10px;
+    padding: 20px;
+    background-color: var(--clr1bg);
+    border-radius: 8px;
+}
+
 .bug-details h3 {
     color: var(--clr1);
     font-size: 2em;
@@ -5,6 +16,10 @@
 
 .bug-details h4 {
     color: var(--clr2);
+}
+
+p{
+    margin-top: 15px;
 }
 
 .bug-details img {

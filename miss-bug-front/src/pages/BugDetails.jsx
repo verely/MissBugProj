@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useParams, useNavigate, NavLink } from 'react-router-dom'
 import { bugService } from '../services/bug.service.js'
 import { showErrorMsg } from '../services/event-bus.service.js'
 
@@ -28,12 +28,12 @@ export function BugDetails() {
     }
 
     if (!bug) return <h1>loadings....</h1>
-    return <div className="bug-details container">
+    return <div className="bug-details">
         <h3>Bug Details 🐛</h3>
-        <h4>{bug.title}</h4>
-        <h5>{bug.desc}</h5>
+        <h4>Title: {bug.title}</h4>
+        <h5>Description: {bug.desc}</h5>
         <p>Severity: <span>{bug.severity}</span></p>
-        <Link to="/bug">Back to List</Link>
+        <NavLink to="/bug">Back to List</NavLink>
     </div>
 
 }
