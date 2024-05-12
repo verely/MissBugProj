@@ -5,7 +5,8 @@ import { dbService } from '../../services/db.service.js'
 import { logger } from '../../services/logger.service.js'
 import { utilService } from '../../services/util.service.js'
 
-async function query(filterBy={}) {
+async function query(filterBy={title:''}) {
+    // console.log(filterBy);
     try {
         const criteria = {
             title: { $regex: filterBy.title, $options: 'i' }
@@ -21,9 +22,10 @@ async function query(filterBy={}) {
 
 async function getById(bugId) {
     try {
+        // console.log(bugId)
         const collection = await dbService.getCollection('bug')
         const bug = await collection.findOne({ _id: new ObjectId(bugId) })
-        bug.createdAt = ObjectId(bug._id).getTimestamp()
+        bug.createdAt = new ObjectId(bug._id).getTimestamp()
         return bug
     } catch (err) {
         logger.error(`Cannot find bug ${bugId}`, err)

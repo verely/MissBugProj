@@ -2,7 +2,7 @@ import { bugService } from './bug.service.js'
 import { logger } from '../../services/logger.service.js'
 
 export async function getBugs(req, res) {
-    const { title, minSeverity, pageIndex } = req.query
+    const { title = '', minSeverity = 0, pageIndex = 0 } = req.query
 
     const filterBy = { title, minSeverity: +minSeverity, pageIndex: +pageIndex }
     try {
@@ -15,8 +15,8 @@ export async function getBugs(req, res) {
 }
 
 export async function getBug(req, res) {
+    const { bugId } = req.params
     try {
-        const bugId = req.params.bugId
         console.log('bugId:', bugId)
         const bug = await bugService.getById(bugId)
         console.log('bug:', bug)
