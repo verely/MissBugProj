@@ -27,19 +27,22 @@ export async function getBug(req, res) {
     }
 }
 
-export async function removeBug(req, res) {
+export async function addBug(req, res) {
+    const { loggedInUser } = req
+    const {title, desc, severity} = req.body
+    let bugToSave = {title, desc, severity: +severity, owner: loggedInUser}
     try {
-        const bugId = req.params.bugId
-        await bugService.remove(bugId)
-        res.send('deleted')
+        bugToSave = await bugService.add(bugToSave)
+        res.send(bugToSave)
     } catch (error) {
-        logger.error(`Cannot remove bug ${bugId}`, error)
-        res.status(400).send(`Cannot remove bug`)
+        logger.error(`Cannot add a bug`, error)
+        res.status(400).send(`Cannot add a bug`)
     }
 }
 
 export async function updateBug(req, res) {
-    const {_id, title, desc, severity, createdAt} = req.body
+    const { loggedInUser } = req
+    const {_id, title, desc, severity, createdAt, owner} = req.body
     let bugToSave = {_id, title, desc, severity: +severity, createdAt}
     try {
         bugToSave = await bugService.update(bugToSave)
@@ -50,14 +53,13 @@ export async function updateBug(req, res) {
     }
 }
 
-export async function addBug(req, res) {
-    const {title, desc, severity} = req.body
-    let bugToSave = {title, desc, severity: +severity}
+export async function removeBug(req, res) {
     try {
-        bugToSave = await bugService.add(bugToSave)
-        res.send(bugToSave)
+        const bugId = req.params.bugId
+        await bugService.remove(bugId)
+        res.send('deleted')
     } catch (error) {
-        logger.error(`Cannot add a bug`, error)
-        res.status(400).send(`Cannot add a bug`)
+        logger.error(`Cannot remove bug ${bugId}`, error)
+        res.status(400).send(`Cannot remove bug`)
     }
 }
