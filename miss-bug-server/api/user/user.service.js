@@ -34,7 +34,7 @@ async function getById(userId) {
     try {
         const collection = await dbService.getCollection('user')
         const user = await collection.findOne({ _id: new ObjectId(userId) })
-        delete user.password
+        
         return user
     } catch (err) {
         logger.error(`Error while finding user ${userId}`, err)
@@ -45,7 +45,7 @@ async function getByUsername(username) {
     try {
         const collection = await dbService.getCollection('user')
         const user = await collection.findOne({ username })
-        delete user?.password
+
         return user
     } catch (err) {
         logger.error(`Error while finding user ${username}`, err)
