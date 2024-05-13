@@ -20,7 +20,9 @@
 @import "cmps/BugList.css";
 @import "cmps/BugPreview.css";
 @import "cmps/BugDetails.css";
-
+@import "cmps/UserList.css";
+@import "cmps/UserPreview.css";
+@import "cmps/UserDetails.css";
 
 .main-app {
     display: flex;

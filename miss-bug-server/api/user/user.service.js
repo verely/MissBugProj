@@ -20,7 +20,7 @@ async function query(filterBy = {}) {
         var users = await collection.find(criteria).sort({nickname: -1}).toArray()
         users = users.map(user => {
             delete user.password
-            user.createdAt = ObjectId(user._id).getTimestamp()
+            user.createdAt = new ObjectId(user._id).getTimestamp()
             return user
         })
         return users
@@ -33,7 +33,7 @@ async function query(filterBy = {}) {
 async function getById(userId) {
     try {
         const collection = await dbService.getCollection('user')
-        const user = await collection.findOne({ _id: ObjectId(userId) })
+        const user = await collection.findOne({ _id: new ObjectId(userId) })
         delete user.password
         return user
     } catch (err) {
@@ -45,7 +45,7 @@ async function getByUsername(username) {
     try {
         const collection = await dbService.getCollection('user')
         const user = await collection.findOne({ username })
-        delete user.password
+        // delete user?.password
         return user
     } catch (err) {
         logger.error(`Error while finding user ${username}`, err)
@@ -56,7 +56,7 @@ async function getByUsername(username) {
 async function remove(userId) {
     try {
         const collection = await dbService.getCollection('user')
-        await collection.deleteOne({ _id: ObjectId(userId) })
+        await collection.deleteOne({ _id: new ObjectId(userId) })
     } catch (err) {
         logger.error(`Cannot remove user ${userId}`, err)
         throw err
@@ -66,7 +66,7 @@ async function remove(userId) {
 async function update(user) {
     try {
         const userToSave = {
-            _id: ObjectId(user._id),
+            _id: new ObjectId(user._id),
             username: user.username,
             fullname: user.fullname,
             score: user.score
@@ -87,7 +87,7 @@ async function add(user) {
 
         const userToAdd = {
             username: user.username,
-            password: user.password,
+            password: user.password || '',
             fullname: user.fullname,
             score: user.score || 0
         }

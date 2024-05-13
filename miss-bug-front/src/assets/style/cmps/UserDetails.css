@@ -1,4 +1,4 @@
-.bug-details {
+.user-details {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -12,12 +12,12 @@
     width: 45%;
 }
 
-.bug-details h3 {
+.user-details h3 {
     color: var(--clr1);
     font-size: 2em;
 }
 
-.bug-details h4 {
+.user-details h4 {
     color: var(--clr2);
 }
 
@@ -25,7 +25,7 @@ p{
     margin-top: 15px;
 }
 
-.bug-details img {
+.user-details img {
     max-width: 200px;
     display: block;
     margin: auto;

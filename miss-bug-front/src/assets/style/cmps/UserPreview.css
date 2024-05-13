@@ -1,4 +1,4 @@
-.bug-preview {
+.user-preview {
     text-align: center;
     padding: 0.3em;
     display: flex;
@@ -7,11 +7,11 @@
     border-radius: 5px;
 }
 
-.bug-preview h4 {
+.user-preview h4 {
     text-transform: capitalize;
     color: black;
 }
 
-.bug-preview img {
+.user-preview img {
     max-width: 100px;
 }

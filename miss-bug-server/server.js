@@ -27,6 +27,9 @@ app.use(express.json())
 import { bugRoutes } from './api/bug/bug.routes.js'
 app.use('/api/bug', bugRoutes)
 
+import { userRoutes } from './api/user/user.routes.js'
+app.use('/api/user', userRoutes)
+
 // const port = 3030
 const port = process.env.PORT || 3000
 app.get('/', (req, res) => res.send('Hello there'))
