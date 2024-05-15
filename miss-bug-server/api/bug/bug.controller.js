@@ -1,5 +1,6 @@
 import { bugService } from './bug.service.js'
 import { logger } from '../../services/logger.service.js'
+import { UnauthorizedError } from '../auth/auth.error.js'
 
 export async function getBugs(req, res) {
     const { title = '', minSeverity = 0, pageIndex = 0 } = req.query
@@ -29,10 +30,10 @@ export async function getBug(req, res) {
 
 export async function addBug(req, res) {
     const { loggedInUser } = req
-    const {title, desc, severity} = req.body
-    let bugToSave = {title, desc, severity: +severity, owner: loggedInUser}
+    const { bug } = req.body
+
     try {
-        bugToSave = await bugService.add(bugToSave)
+        const bugToSave = await bugService.add(bug, loggedInUser)
         res.send(bugToSave)
     } catch (error) {
         logger.error(`Cannot add a bug`, error)
@@ -42,24 +43,35 @@ export async function addBug(req, res) {
 
 export async function updateBug(req, res) {
     const { loggedInUser } = req
-    const {_id, title, desc, severity, createdAt, owner} = req.body
-    let bugToSave = {_id, title, desc, severity: +severity, createdAt}
+    const { bug } = req.body
+    console.log(bug)
     try {
-        bugToSave = await bugService.update(bugToSave)
-        res.send(bugToSave)
-    } catch (error) {
-        logger.error(`Cannot update a bug`, error)
-        res.status(400).send(`Cannot update a bug`)
+        await bugService.update(bug, loggedInUser)
+        res.send('updated')
+    } catch (err) {
+        if (err instanceof UnauthorizedError) {
+            logger.error(`Failed update bug ${bug._id}: ${err.message}`);
+            res.status(403).send(`Failed update bug: ${err.message}`);
+        } else {
+            logger.error(`Failed update bug ${bug._id}`, err);
+            res.status(500).send(`Failed update bug: ${err.message}`);
+        }
     }
 }
 
 export async function removeBug(req, res) {
+    const { loggedInUser } = req
+    const { bugId } = req.params
     try {
-        const bugId = req.params.bugId
-        await bugService.remove(bugId)
+        await bugService.remove(bugId, loggedInUser)
         res.send('deleted')
-    } catch (error) {
-        logger.error(`Cannot remove bug ${bugId}`, error)
-        res.status(400).send(`Cannot remove bug`)
+    } catch (err) {
+        if (err instanceof UnauthorizedError) {
+            logger.error(`Failed remove bug ${bugId}: ${err.message}`);
+            res.status(err.statusCode).send(`Failed remove bug: ${err.message}`);
+        } else {
+            logger.error(`Failed remove bug ${bugId}`, err);
+            res.status(500).send(`Failed remove bug: ${err.message}`);
+        }
     }
 }

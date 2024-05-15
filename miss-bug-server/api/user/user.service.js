@@ -34,7 +34,7 @@ async function getById(userId) {
     try {
         const collection = await dbService.getCollection('user')
         const user = await collection.findOne({ _id: new ObjectId(userId) })
-        
+
         return user
     } catch (err) {
         logger.error(`Error while finding user ${userId}`, err)
@@ -89,7 +89,8 @@ async function add(user) {
             username: user.username,
             password: user.password || '',
             fullname: user.fullname,
-            score: user.score || 0
+            score: user.score || 0,
+            isAdmin: false
         }
         const collection = await dbService.getCollection('user')
         await collection.insertOne(userToAdd)

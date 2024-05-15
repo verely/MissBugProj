@@ -4,69 +4,79 @@
     "username": "sherlockholmes",
     "fullname": "Sherlock Holmes",
     "password": "elementary",
-    "score": 100
+    "score": 100,
+    "isAdmin": true
   },
   {
     "_id": "002",
     "username": "drwatson",
     "fullname": "John Watson",
     "password": "bakerstreet",
-    "score": 89
+    "score": 89,
+    "isAdmin": false
   },
   {
     "_id": "003",
     "username": "herculepoirot",
     "fullname": "Hercule Poirot",
     "password": "littlegraycells",
-    "score": 98
+    "score": 98,
+    "isAdmin": false
   },
   {
     "_id": "004",
     "username": "missmarple",
     "fullname": "Jane Marple",
     "password": "secret",
-    "score": 97
+    "score": 97,
+    "isAdmin": false
   },
   {
     "_id": "005",
     "username": "tommyberesford",
     "fullname": "Thomas Beresford",
     "password": "partnersincrime",
-    "score": 95
+    "score": 95,
+    "isAdmin": false
   },
   {
     "_id": "006",
     "username": "tuppencecowley",
     "fullname": "Prudence Cowley",
     "password": "adventures",
-    "score": 95
+    "score": 95,
+    "isAdmin": false
   },
   {
     "_id": "007",
     "username": "bond",
     "fullname": "James Bond",
     "password": "agent007",
-    "score": 96
+    "score": 96,
+    "isAdmin": false
   },
   {
     "_id": "008",
     "username": "agathachristie",
     "fullname": "Agatha Christie",
     "password": "poirotmarple",
-    "score": 99
+    "score": 99,
+    "isAdmin": false
   },
   {
     "_id": "009",
     "username": "arthurconandoyle",
     "fullname": "Arthur Conan Doyle",
     "password": "sherlockholmes",
-    "score": 100
+    "score": 100,
+    "isAdmin": false
   },
   {
     "_id": "010",
     "username": "nancydrew",
     "fullname": "Nancy Drew",
     "password": "mysterysolver",
-    "score": 80
+    "score": 80,
+    "isAdmin": false
   }
 ]

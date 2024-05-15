@@ -10,8 +10,7 @@ router.get('/', getBugs)
 router.get('/:bugId', getBug)
 router.post('/', requireAuth, addBug)
 router.put('/:bugId', requireAuth, updateBug)
-// router.delete('/:bugId', requireAuth, removeBug)
-router.delete('/:bugId', removeBug)
+router.delete('/:bugId', requireAuth, removeBug)
 
 
 export const bugRoutes = router
