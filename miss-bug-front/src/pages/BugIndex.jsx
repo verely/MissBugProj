@@ -26,8 +26,13 @@ export function BugIndex() {
   }
 
   async function loadBugs() {
-    const bugs = await bugService.query(filterBy)
-    setBugs(bugs)
+    try {
+      const bugs = await bugService.query(filterBy)
+      setBugs(bugs)
+    } catch (err) {
+      console.log('Cannot load bugs:',err)
+      showErrorMsg('Cannot load bugs')
+    }
   }
 
   async function onRemoveBug(bugId) {
@@ -37,7 +42,7 @@ export function BugIndex() {
       setBugs(prevBugs => prevBugs.filter((bug) => bug._id !== bugId))
       showSuccessMsg('Bug removed')
     } catch (err) {
-      console.log('Error from onRemoveBug ->', err)
+      console.log('Cannot remove bug:', err)
       showErrorMsg('Cannot remove bug')
     }
   }
@@ -80,7 +85,7 @@ export function BugIndex() {
     <main className="bug-index">
       <main>
         <BugFilter filterBy={filterBy} onSetFilterBy={debouncedSetFilterBy}/>
-        <button className='add-btn' onClick={onAddBug}>Add Bug ⛐</button>
+        <button className='btn-add' onClick={onAddBug}>Add Bug ⛐</button>
         <BugList bugs={bugs} onRemoveBug={onRemoveBug} onEditBug={onEditBug} />
       </main>
     </main>
