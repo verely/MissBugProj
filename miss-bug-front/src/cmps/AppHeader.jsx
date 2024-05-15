@@ -41,7 +41,6 @@ export function AppHeader() {
             </div>
             {user ? (
                 < section >
-
                     <Link to={`/user/${user._id}`}>Hello {user.fullname}</Link>
                     <button onClick={onLogout}>Logout</button>
                 </ section >

@@ -8,7 +8,7 @@ export function BugList({ bugs, onRemoveBug, onEditBug }) {
   const user = authService.getLoggedInUser()
 
   function isOwner(bug) {
-    console.log(bug.owner)
+    //console.log(bug.owner)
     if (!user) return false
     if (!bug.owner) return true
     return user.isAdmin || (bug.owner._id === user._id)
