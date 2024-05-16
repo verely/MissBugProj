@@ -10,13 +10,14 @@ async function query(filterBy={title:''}) {
     // console.log(filterBy);
     try {
         const criteria = {
-            title: { $regex: filterBy.title, $options: 'i' }
+            title: { $regex: filterBy.title, $options: 'i' },
+            severity: { $gte: filterBy.minSeverity }
         }
         const collection = await dbService.getCollection('bug')
         var bugs = await collection.find(criteria).toArray()
         return bugs
     } catch (err) {
-        logger.error(`Error occurred while search query: ${err}. Filter parameters used: ${filterBy.title}`);
+        logger.error(`Error occurred while search query: ${err}. Filter parameters used: ${filterBy.title}, ${filterBy.minSeverity}`);
         throw err
     }
 }
