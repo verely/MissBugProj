@@ -26,7 +26,7 @@ async function getById(bugId) {
     try {
         // console.log(bugId)
         const collection = await dbService.getCollection('bug')
-        const bug = await collection.findOne({ _id: new ObjectId(bugId) })
+        const bug = await collection.findOne({ _id: ObjectId.createFromHexString(bugId) })
         return bug
     } catch (err) {
         logger.error(`Cannot find bug ${bugId}`, err)
@@ -45,11 +45,17 @@ async function add(bug, loggedInUser) {
         const collection = await dbService.getCollection('bug')
         const insertionResult = await collection.insertOne(bugToSave)
         if (insertionResult.acknowledged) {
+
+            const insertedId = insertionResult.insertedId
+            console.log(`createFromHexString: ${ObjectId.createFromHexString(insertedId).getTimestamp().getTime()}`)
+            console.log(`new ${new ObjectId(insertedId).getTimestamp().getTime()}`)
+
             const insertedBug = {
                 ...bugToSave,
-                _id: insertionResult.insertedId,
-                createdAt: new ObjectId(insertionResult.insertedId).getTimestamp().getTime()
+                _id: insertedId,
+                createdAt: ObjectId.createFromHexString(insertedId).getTimestamp().getTime()
             };
+            console.log(insertedBug)
             return insertedBug;
         } else {
             throw new Error('Failed to insert bug');
@@ -72,7 +78,7 @@ async function update(bug, loggedInUser) {
             severity: +bug.severity
         }
         const collection = await dbService.getCollection('bug')
-        const updateResult = await collection.updateOne({ _id: new ObjectId(bug._id) }, { $set: bugToSave })
+        const updateResult = await collection.updateOne({ _id: ObjectId.createFromHexString(bug._id) }, { $set: bugToSave })
         if (updateResult.acknowledged) {
             const updatedBug = {
                 ...bugToSave
@@ -94,7 +100,7 @@ async function remove(bugId, loggedInUser) {
         }
 
         const collection = await dbService.getCollection('bug')
-        await collection.deleteOne({ _id: new ObjectId(bugId) })
+        await collection.deleteOne({ _id: ObjectId.createFromHexString(bugId) })
     }
     catch (err) {
         logger.error(`Cannot remove bug ${bugId}`, err)
@@ -121,7 +127,7 @@ async function addBugLabels(bugId, label) {
     try {
         label.id = utilService.makeId()
         const collection = await dbService.getCollection('bug')
-        await collection.updateOne({ _id: new ObjectId(bugId) }, { $push: { labels: label } })
+        await collection.updateOne({ _id: ObjectId.createFromHexString(bugId) }, { $push: { labels: label } })
         return label
     } catch (err) {
         logger.error(`Cannot add bug label ${bugId}`, err)
@@ -132,7 +138,7 @@ async function addBugLabels(bugId, label) {
 async function removeBugLabels(bugId, labelId) {
     try {
         const collection = await dbService.getCollection('bug')
-        await collection.updateOne({ _id: new ObjectId(bugId) }, { $pull: { labels: {id: labelId} } })
+        await collection.updateOne({ _id: ObjectId.createFromHexString(bugId) }, { $pull: { labels: {id: labelId} } })
         return labelId
     } catch (err) {
         logger.error(`cannot remove bug label ${bugId}`, err)

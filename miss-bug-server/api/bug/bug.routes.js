@@ -4,7 +4,7 @@ import { addBug, getBug, getBugs, removeBug, updateBug } from './bug.controller.
 
 const router = express.Router()
 
-router.use(requireAuth)
+// router.use(requireAuth)
 
 router.get('/', getBugs)
 router.get('/:bugId', getBug)
