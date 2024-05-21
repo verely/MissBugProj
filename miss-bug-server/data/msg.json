@@ -1,0 +1,6 @@
+{
+    "_id": "someMongoId",
+    "txt": "Fix that bug already",
+    "aboutBugId": "someMongoId",
+    "byUserId": "someMongoId"
+}

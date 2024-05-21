@@ -25,14 +25,17 @@ app.use(cookieParser())
 app.use(cors(corsOptions))
 app.use(express.json())
 
+import { authRoutes } from './api/auth/auth.routes.js'
+app.use('/api/auth', authRoutes)
+
 import { bugRoutes } from './api/bug/bug.routes.js'
 app.use('/api/bug', bugRoutes)
 
 import { userRoutes } from './api/user/user.routes.js'
 app.use('/api/user', userRoutes)
 
-import { authRoutes } from './api/auth/auth.routes.js'
-app.use('/api/auth', authRoutes)
+import { msgRoutes } from './api/msg/msg.routes.js'
+app.use('/api/msg', msgRoutes)
 
 // const port = 3030
 const port = process.env.PORT || 3000
