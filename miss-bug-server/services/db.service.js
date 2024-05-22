@@ -23,8 +23,6 @@ async function getCollection(collectionName) {
 async function _connect() {
     if (dbConn) return dbConn
     try {
-        logger.error(config.dbURL)
-        logger.error(config.dbName)
         const client = await MongoClient.connect(config.dbURL)
         const db = client.db(config.dbName)
         dbConn = db
