@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon --ignore \"./data\" server.js",
     "build": "bash build.sh",
-    "start": "node -r dotenv/config server.js"
+    "start": "set NODE_ENV=production&node server.js"
   },
   "author": "valery",
   "license": "ISC",
