@@ -4,9 +4,6 @@ import { UnauthorizedError } from '../auth/auth.error.js'
 
 export async function getBugs(req, res) {
     const { title = '', minSeverity = 0, pageIndex = 0 } = req.query
-    logger.error(process.env.NODE_ENV)
-    logger.error(process.env.DB_NAME)
-    logger.error(process.env.MONGO_URL)
     const filterBy = { title, minSeverity: +minSeverity, pageIndex: +pageIndex }
     try {
         const bugs = await bugService.query(filterBy)
